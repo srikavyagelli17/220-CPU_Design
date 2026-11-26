@@ -14,5 +14,5 @@ Output:
 - RAM columns: address, hex, binary, ASCII, and disassembly or data label
 - One RESULT line per program, with the expected value and PASS or FAIL
 
-Zip:
-  zip -r cpu_project.zip *.c *.h Makefile README.txt output.txt
+Zip (source only; do not zip the folder, or .git and __MACOSX get included):
+  COPYFILE_DISABLE=1 zip -r -X cpu_project.zip *.c *.h Makefile README.txt output.txt

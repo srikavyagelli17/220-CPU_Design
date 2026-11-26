@@ -20,7 +20,7 @@ static void snapshot(const Cpu *cpu, u16 *prev)
 }
 
 /* Returns 1 when RESULT matches expected. */
-static int run_program(const char *title, const char *blurb,
+static int run_program(const char *title,
                        const char **c_lines, const char **asm_lines,
                        const char *expr, unsigned expected)
 {
@@ -35,7 +35,6 @@ static int run_program(const char *title, const char *blurb,
 
     printf("================================================================================\n");
     printf("%s\n", title);
-    printf("%s\n", blurb);
     printf("================================================================================\n");
     if (c_lines != 0) {
         display_listing("C function:", c_lines);
@@ -91,14 +90,8 @@ int main(void)
     int ok_b;
 
     display_isa();
-    ok_a = run_program(
-        "PROGRAM A: 8^2",
-        "Multiply 1 by 8, twice. Answer is stored in RESULT.",
-        0, prog_pow, "8^2", 64u);
-    ok_b = run_program(
-        "PROGRAM B: 8!",
-        "Hand-translated from the C function printed below.",
-        prog_fact_c, prog_fact, "8!", 40320u);
+    ok_a = run_program("PROGRAM A: 8^2", 0, prog_pow, "8^2", 64u);
+    ok_b = run_program("PROGRAM B: 8!", prog_fact_c, prog_fact, "8!", 40320u);
 
     if (ok_a && ok_b) {
         printf("BOTH PROGRAMS PASSED\n");

@@ -1,12 +1,6 @@
 CPU SIMULATOR
-16-bit word. RAM is 32 words, word-addressable, addresses 0x00-0x1F.
-Code and data share RAM. Registers: R0 R1 R2 R3, PC, IR, flag Z.
-Instruction word: [opcode:4][rd:2][rs:2][imm/addr:8]
-Immediates are signed 8-bit (-128..127). Addresses are unsigned.
-Arithmetic wraps in 16 bits.
-Z is set by LOADI, LOAD, ADD, SUB, MUL, ADDI, MOV, and CMP.
-CMP sets Z from (rd == rs) and does not write a register.
-STORE, JMP, JZ, JNZ, and HALT leave Z unchanged.
+WORD 16-bit   RAM 32 words 0x00-0x1F   [opcode:4][rd:2][rs:2][imm/addr:8]
+REGS R0 R1 R2 R3 PC IR Z   IMM signed 8-bit   ADDR unsigned   WRAP 16-bit
 
 OPCODE  MNEMONIC  FORMAT              MEANING
 0000    HALT      HALT                stop execution
@@ -23,14 +17,14 @@ OPCODE  MNEMONIC  FORMAT              MEANING
 1011    JZ        JZ addr             if Z then PC = addr
 1100    JNZ       JNZ addr            if Z is clear then PC = addr
 
-Trace: header PC is the instruction just executed. '>' marks that word.
-       Register PC is the next fetch address.
-       '*' marks a RAM word written on this step.
-       ASCII is the high byte, then the low byte. '.' is non-printable.
+KEY
+* = written this step
+> = executed instruction
+ASCII = high byte, low byte; '.' = non-printable
+header PC = executed instruction    register PC = next fetch
 
 ================================================================================
 PROGRAM A: 8^2
-Multiply 1 by 8, twice. Answer is stored in RESULT.
 ================================================================================
 Assembly:
     ; acc = 1; multiply by base (8) exactly exp (2) times
@@ -531,7 +525,6 @@ RESULT: 8^2 = 64  expected 64  PASS
 
 ================================================================================
 PROGRAM B: 8!
-Hand-translated from the C function printed below.
 ================================================================================
 C function:
     int factorial(void) {

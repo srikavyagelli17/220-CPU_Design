@@ -269,14 +269,8 @@ static const char *fault_text(int fault)
 void display_isa(void)
 {
     printf("CPU SIMULATOR\n");
-    printf("16-bit word. RAM is 32 words, word-addressable, addresses 0x00-0x1F.\n");
-    printf("Code and data share RAM. Registers: R0 R1 R2 R3, PC, IR, flag Z.\n");
-    printf("Instruction word: [opcode:4][rd:2][rs:2][imm/addr:8]\n");
-    printf("Immediates are signed 8-bit (-128..127). Addresses are unsigned.\n");
-    printf("Arithmetic wraps in 16 bits.\n");
-    printf("Z is set by LOADI, LOAD, ADD, SUB, MUL, ADDI, MOV, and CMP.\n");
-    printf("CMP sets Z from (rd == rs) and does not write a register.\n");
-    printf("STORE, JMP, JZ, JNZ, and HALT leave Z unchanged.\n");
+    printf("WORD 16-bit   RAM 32 words 0x00-0x1F   [opcode:4][rd:2][rs:2][imm/addr:8]\n");
+    printf("REGS R0 R1 R2 R3 PC IR Z   IMM signed 8-bit   ADDR unsigned   WRAP 16-bit\n");
     printf("\n");
     printf("OPCODE  MNEMONIC  FORMAT              MEANING\n");
     printf("0000    HALT      HALT                stop execution\n");
@@ -293,10 +287,11 @@ void display_isa(void)
     printf("1011    JZ        JZ addr             if Z then PC = addr\n");
     printf("1100    JNZ       JNZ addr            if Z is clear then PC = addr\n");
     printf("\n");
-    printf("Trace: header PC is the instruction just executed. '>' marks that word.\n");
-    printf("       Register PC is the next fetch address.\n");
-    printf("       '*' marks a RAM word written on this step.\n");
-    printf("       ASCII is the high byte, then the low byte. '.' is non-printable.\n");
+    printf("KEY\n");
+    printf("* = written this step\n");
+    printf("> = executed instruction\n");
+    printf("ASCII = high byte, low byte; '.' = non-printable\n");
+    printf("header PC = executed instruction    register PC = next fetch\n");
     printf("\n");
 }
 
